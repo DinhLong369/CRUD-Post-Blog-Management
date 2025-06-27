@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"log"
 	"net/http"
 	"post_blog/models"
 	"post_blog/services"
@@ -68,6 +69,7 @@ func (ctrl *PostController) Update(c *gin.Context) {
 func (ctrl *PostController) Delete(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	err := ctrl.service.Delete(id)
+
 	if err != nil {
 		c.JSON(http.StatusBadGateway, gin.H{
 			"error": err.Error(),
@@ -86,4 +88,24 @@ func (ctrl *PostController) List(c *gin.Context) {
 		})
 	}
 	c.JSON(http.StatusOK, gin.H{"data": items, "total": total})
+}
+
+func (ctrl *PostController) DeleteMany(c *gin.Context) {
+	var input models.Ids
+	log.Println(input)
+
+	if err := c.ShouldBind(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+	err := ctrl.service.DeleteMany(input.Ids)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+	}
+	c.JSON(http.StatusOK, gin.H{"data": true})
+
 }

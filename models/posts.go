@@ -18,6 +18,10 @@ type BlogCreateUpdate struct {
 	Author  string `json:"author" gorm:"column:author"`
 }
 
+type Ids struct {
+	Ids []int
+}
+
 func (BlogPost) TableName() string {
 	return "blog_post_management"
 }

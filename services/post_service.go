@@ -11,6 +11,7 @@ type PostService interface {
 	Update(id int, update models.BlogCreateUpdate) error
 	Delete(id int) error
 	List(page int, limit int) ([]models.BlogPost, int64, error)
+	DeleteMany(ids []int) error
 }
 
 type postService struct {
@@ -39,4 +40,8 @@ func (s *postService) Delete(id int) error {
 
 func (s *postService) List(page int, limit int) ([]models.BlogPost, int64, error) {
 	return s.repo.List(page, limit)
+}
+
+func (s *postService) DeleteMany(ids []int) error {
+	return s.repo.DeleteMany(ids)
 }

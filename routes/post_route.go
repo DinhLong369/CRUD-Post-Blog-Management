@@ -18,8 +18,10 @@ func SetupRoute(router *gin.RouterGroup) {
 	{
 		post.POST("", ctrl.Create)
 		post.GET("", ctrl.List)
+		post.DELETE("/many", ctrl.DeleteMany)
 		post.GET("/:id", ctrl.Get)
 		post.PATCH("/:id", ctrl.Update)
 		post.DELETE("/:id", ctrl.Delete)
+
 	}
 }

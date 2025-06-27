@@ -12,6 +12,7 @@ type PostRepo interface {
 	Update(id int, update models.BlogCreateUpdate) error
 	Delete(id int) error
 	List(page int, limit int) ([]models.BlogPost, int64, error)
+	DeleteMany(ids []int) error
 }
 type postRepo struct {
 	db *gorm.DB
@@ -53,4 +54,8 @@ func (r *postRepo) List(page int, limit int) ([]models.BlogPost, int64, error) {
 	r.db.Model(&models.BlogPost{}).Count(&total)
 	err := r.db.Order("id desc").Offset(offset).Limit(limit).Find(&items).Error
 	return items, total, err
+}
+
+func (r *postRepo) DeleteMany(ids []int) error {
+	return r.db.Table("blog_post_management").Where("id IN ?", ids).Delete(nil).Error
 }

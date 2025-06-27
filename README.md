@@ -51,6 +51,8 @@ Xây dựng một RESTful API bằng Golang để quản lý bài viết blog. B
 5. **Xoá bài viết**  
    `DELETE /posts/:id`
 
+6. **Xoá nhiều bài viết theo id**  
+   `DELETE /posts/many/:id`
 ---
 
 ## 🧱 Database structure
